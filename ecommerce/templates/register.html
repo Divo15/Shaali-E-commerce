@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | GG Fashion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+  <main class="page-shell">
+    <section class="section">
+      <div class="auth-grid">
+        <div class="auth-panel">
+          <div class="eyebrow">Join GG Fashion</div>
+          <h1>Create your premium wardrobe account.</h1>
+          <p>Save favorites, track festive orders, and receive early previews of new arrivals and celebration collections.</p>
+          <ul class="split-promo">
+            <li>Personal wishlists for ceremonies and gifting</li>
+            <li>Faster checkout for occasion shopping</li>
+            <li>Access to styling notes and festive drops</li>
+          </ul>
+        </div>
+
+        <div class="auth-panel">
+          <h2>Register</h2>
+          <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div class="form-grid">
+              <label class="field">
+                <span>First Name</span>
+                {{ form.first_name }}
+                {{ form.first_name.errors }}
+              </label>
+              <label class="field">
+                <span>Last Name</span>
+                {{ form.last_name }}
+                {{ form.last_name.errors }}
+              </label>
+              <label class="field-full">
+                <span>Username</span>
+                {{ form.username }}
+                {{ form.username.errors }}
+              </label>
+              <label class="field-full">
+                <span>Email</span>
+                {{ form.email }}
+                {{ form.email.errors }}
+              </label>
+              <label class="field-full">
+                <span>Phone</span>
+                {{ form.phone_number }}
+                {{ form.phone_number.errors }}
+              </label>
+              <label class="field-full">
+                <span>Password</span>
+                {{ form.password }}
+                {{ form.password.errors }}
+              </label>
+              <label class="field-full">
+                <span>Confirm Password</span>
+                {{ form.confirm_password }}
+                {{ form.confirm_password.errors }}
+              </label>
+            </div>
+
+            <div class="inline-actions">
+              <button class="cta-btn" type="submit">Create Account</button>
+            </div>
+          </form>
+          <p class="inline-note">Already registered? <a class="text-link" href="{% url 'accounts:login' %}">Sign in here</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
