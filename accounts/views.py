@@ -1,6 +1,7 @@
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.shortcuts import redirect, render
 from django.utils.http import url_has_allowed_host_and_scheme
+from django.views.decorators.http import require_POST
 
 from .forms import RegistrationForm
 
@@ -16,6 +17,12 @@ def register(request):
         return redirect('accounts:login')
 
     return render(request, 'register.html', {'form': form})
+
+
+@require_POST
+def logout(request):
+    auth_logout(request)
+    return redirect('accounts:login')
 
 
 def login(request):
