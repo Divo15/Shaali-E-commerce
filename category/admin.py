@@ -1,10 +1,17 @@
 from django.contrib import admin
-from .models import Category, SubCategory
+from .models import Category, Department, SubCategory
+
+
+@admin.register(Department)
+class DepartmentAdmin(admin.ModelAdmin):
+    list_display = ('department_name', 'slug')
+    prepopulated_fields = {'slug': ('department_name',)}
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('category_name', 'slug')
+    list_display = ('category_name', 'department', 'slug')
+    list_filter = ('department',)
     prepopulated_fields = {'slug': ('category_name',)}
 
 @admin.register(SubCategory)

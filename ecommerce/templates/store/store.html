@@ -1,1 +1,33 @@
-<h2>Store Page</h2>
+<h1>Store</h1>
+
+<nav>
+    <a href="{% url 'store:store' %}">All products</a>
+    {% for category in links %}
+        <a href="{{ category.get_url }}">{{ category.category_name }}</a>
+    {% endfor %}
+</nav>
+
+{% if selected_category %}
+    <h2>{{ selected_category.category_name }}</h2>
+    <nav>
+        {% for subcategory in selected_category.subcategories.all %}
+            <a href="{{ subcategory.get_url }}">{{ subcategory.subcategory_name }}</a>
+        {% endfor %}
+    </nav>
+{% endif %}
+
+{% if selected_subcategory %}
+    <h3>{{ selected_subcategory.subcategory_name }}</h3>
+{% endif %}
+
+<p>{{ product_count }} product{{ product_count|pluralize }}</p>
+
+{% for product in products %}
+    <article>
+        <h2><a href="{{ product.get_url }}">{{ product.product_name }}</a></h2>
+        <p>{{ product.description }}</p>
+        <p>{{ product.price }}</p>
+    </article>
+{% empty %}
+    <p>No products are available.</p>
+{% endfor %}

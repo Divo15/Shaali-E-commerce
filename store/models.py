@@ -1,5 +1,5 @@
 from django.db import models
-from category.models import Category
+from category.models import Category, SubCategory
 from django.urls import reverse
 
 # Create your models here.
@@ -13,11 +13,21 @@ class Product(models.Model):
     stock = models.BooleanField(default=False)
     is_available = models.BooleanField(default=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    subcategory = models.ForeignKey(
+        SubCategory,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name='products',
+    )
     create_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
 
     def get_url(self):
-        return reverse('product_detail',args=[self.category.slug,self.slug])
+        return reverse(
+            'store:product_detail',
+            args=[self.category.department.slug, self.category.slug, self.slug],
+        )
 
 
     def __str__(self):
